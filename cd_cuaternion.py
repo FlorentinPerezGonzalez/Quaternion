@@ -56,7 +56,7 @@ r2=[0,a2,0,0]
 
 
 # vectores de rotaci�n
-n1=[0,0,1]
+n1=[0,1,0]
 n2=[0,0,1]
 
 
@@ -98,10 +98,3 @@ print o1
 print ''
 print 'punto dos del robot'
 print o2
-
-
-
-
-
-
-

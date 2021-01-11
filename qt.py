@@ -56,13 +56,14 @@ def cuaternion_rotacion(n,theta):
     y = n[1]*sin(theta/2)
     z = n[2]*sin(theta/2)
     return(np.quaternion(w,x,y,z))
+
 # cuaterniones de desplazamiento
-r1=np.quaternion(0,5,2,5)
-r2=np.quaternion(0,7,5,5)
+r1=np.quaternion(0,5,0,0)
+r2=np.quaternion(0,5,0,0)
 
 # vectores de rotaci�n
 n1=[1,0,0]
-n2=[1,0,0]
+n2=[0,1,0]
 
 # introducci�n de las variables articulares
 print('')
@@ -100,5 +101,7 @@ print('')
 print('punto dos del robot')
 print(o2)
 
-muestra_robot([[0,0,0,0], quaternion.as_float_array(o1), quaternion.as_float_array(o2)])
+print (quaternion.as_float_array(o1))
+
+muestra_robot([[0,0,0,1], [o1.x, o1.y, o1.z, 1], [o2.x, o2.y, o2.z, 1]])
 input()
