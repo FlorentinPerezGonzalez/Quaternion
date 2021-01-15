@@ -12,6 +12,7 @@ from qtFuncs import directKinematicsQt
 arms_frame = 0
 all_arms = []
 arts_frame = 0
+send_button = 0
 all_arts = []
 
 class ScrollableFrame(Frame):
@@ -43,17 +44,25 @@ def button_kinematics():
     directKinematicsQt(all_arms2, all_arts2)
 
 def generate_scrolls():
-  global arms_frame, arts_frame, all_arms, all_arts
+  global arms_frame, arts_frame, all_arms, all_arts, send_button
   n_arts = arms_entry.get()
   all_arms = []
   all_arts = []
+  aux = False
+  if (arms_frame):
+    arms_frame.destroy()
+    arts_frame.destroy()
+    aux = True
   arms_frame = ScrollableFrame(root)
   arts_frame = ScrollableFrame(root)
   arms_frame.pack(pady=5, anchor="w", fill="x")
   arts_frame.pack(pady=1, anchor="w", fill="x")
   generate_arms_scrolls(n_arts)
   generate_arts_scrolls(n_arts)
-  Button(root, text="Enviar", pady=1, height=1, cursor="hand2", command=button_kinematics).pack()
+  if (send_button):
+    send_button.destroy()
+  send_button = Button(root, text="Enviar", pady=1, height=1, cursor="hand2", command=button_kinematics)
+  send_button.pack()
 
 def generate_single_arm(counter):
   global arms_frame, all_arms
