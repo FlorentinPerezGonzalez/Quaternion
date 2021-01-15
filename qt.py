@@ -84,8 +84,10 @@ def cuaternion_rotacion(n, theta):
     return(np.quaternion(w, x, y, z))
 
 def generate_scrolls():
-  global arms_frame, arts_frame
+  global arms_frame, arts_frame, all_arms, all_arts
   n_arts = arms_entry.get()
+  all_arms = []
+  all_arts = []
   arms_frame = ScrollableFrame(root)
   arts_frame = ScrollableFrame(root)
   arms_frame.pack(pady=5, anchor="w", fill="x")
