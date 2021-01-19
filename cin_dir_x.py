@@ -99,6 +99,8 @@ nvar=2 # Número de variables
 if len(sys.argv) != nvar:
   sys.exit('El número de articulaciones no es el correcto ('+str(nvar)+')')
 pp=int(sys.argv[1])
+
+# Calcula el tiempo de recrear X puntos de X articulaciones con matrices
 @temporizador
 def cinDirMatrices(p):
   # Parámetros D-H:

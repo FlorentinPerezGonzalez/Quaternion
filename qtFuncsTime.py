@@ -68,6 +68,7 @@ def cuaternion_rotacionList(art_list):
     z = art_list[2]*sin(th/2)
     return(np.quaternion(w, x, y, z))
 
+# Calcula el tiempo de calcular X brazos con quaterniones
 @temporizador
 def directKinematicsQt(arms, articulations): 
     # Los brazos no pueden tener tamaño negativo
