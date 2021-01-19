@@ -14,6 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from functools import reduce
+from decTime import temporizadorGetTime, temporizador
 
 # ******************************************************************************
 # Declaración de funciones
@@ -97,26 +98,29 @@ plt.ion() # Modo interactivo
 nvar=2 # Número de variables
 if len(sys.argv) != nvar:
   sys.exit('El número de articulaciones no es el correcto ('+str(nvar)+')')
-p=int(sys.argv[1])
+pp=int(sys.argv[1])
+@temporizador
+def cinDirMatrices(p):
+  # Parámetros D-H:
+  #        1    2
+  d  = [0] * p
+  th = [45] * p
+  a  = [5] * p
+  al = [0] * p
 
-# Parámetros D-H:
-#        1    2
-d  = [0] * p
-th = [45] * p
-a  = [5] * p
-al = [0] * p
+  # Orígenes para cada articulación
+  origen = [0, 0, 0, 1]
+  T0X = [matriz_T(d[i], th[i], a[i], al[i]) for i in range(p)]
+  T0Xalreves = T0X[::-1]
+  resultado = [[0, 0, 0, 1], np.dot(T0X[0], origen).tolist()]
 
-# Orígenes para cada articulación
-origen = [0, 0, 0, 1]
-T0X = [matriz_T(d[i], th[i], a[i], al[i]) for i in range(p)]
-T0Xalreves = T0X[::-1]
-resultado = [[0, 0, 0, 1], np.dot(T0X[0], origen).tolist()]
-
-for i in range(1, p):
-    res = reduce(lambda a, b: np.dot(a, b), T0Xalreves[:i])
-    resultado.append(np.dot(res, origen).tolist())
+  for i in range(1, p):
+      res = reduce(lambda a, b: np.dot(a, b), T0Xalreves[:i])
+      resultado.append(np.dot(res, origen).tolist())
 # Mostrar resultado de la cinemática directa
-muestra_origenes(resultado)
-muestra_robot   (resultado)
-input()
+# muestra_origenes(resultado)
+# muestra_robot   (resultado)
+# input()
+
+cinDirMatrices(pp)
 

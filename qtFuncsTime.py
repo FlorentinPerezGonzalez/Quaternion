@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from functools import reduce
 from decTime import temporizadorGetTime, temporizador
+import sys
 
 def ramal(I, prev=[], base=0):
     # Convierte el robot a una secuencia de puntos para representar
@@ -67,6 +68,7 @@ def cuaternion_rotacionList(art_list):
     z = art_list[2]*sin(th/2)
     return(np.quaternion(w, x, y, z))
 
+@temporizador
 def directKinematicsQt(arms, articulations): 
     # Los brazos no pueden tener tamaño negativo
     if len(arms) <= 0 or len(articulations) <= 0:
@@ -90,5 +92,15 @@ def directKinematicsQt(arms, articulations):
         points_list.append(conjugate_multiplication + points_list[i - 1])
     # Creamos una nueva lista que representa las posiciones de los puntos en 3 dimensiones
     points_3d = [[0, 0, 0, 1]] + list(map(lambda x: [x.x, x.y, x.z, 1], points_list))
-    print(points_3d)
-    muestra_robot(points_3d) # Lanza el gráfico interactivo que muuestra el brazo
+    # print(points_3d)
+    # muestra_robot(points_3d) # Lanza el gráfico interactivo que muuestra el brazo
+    
+nvar=2 # Número de variables
+if len(sys.argv) != nvar:
+    sys.exit('El número de articulaciones no es el correcto ('+str(nvar)+')')
+pp=int(sys.argv[1])
+
+armsX = [5] * pp
+articulationsX = [[0, 0, 1, 45]] * pp
+
+directKinematicsQt(armsX, articulationsX)
