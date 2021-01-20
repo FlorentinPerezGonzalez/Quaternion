@@ -79,14 +79,18 @@ def directKinematicsQt(arms, articulations):
     quaternions_rotation_list_conjugate = [np.conjugate(qt) for qt in quaternions_rotation_list]
     points_list = [] # Lista de puntos una vez aplicada la rotación
     # Guardamos el valor de la izquierda de r en la fórmula para ahorrar operaciones
+    # Guardamos el valor de la izquierda de r en la fórmula para ahorrar operaciones
     qt_memorization = quaternions_rotation_list[0]
+    qt_memorizationC = quaternions_rotation_list_conjugate[0]
     # Inclusión del primer punto en la lista
     points_list.append(qt_memorization * arms_quaternions[0] * quaternions_rotation_list_conjugate[0])
     # Bucle que realiza la fórmula para obtener el valor de los puntos siguientes
     for i in range(1, len(arms)):
         qt_memorization *= quaternions_rotation_list[i]
         inicio = qt_memorization * arms_quaternions[i]
-        conjugate_multiplication = reduce(lambda a,b : a * b, [inicio] + quaternions_rotation_list_conjugate[::-1][:i+1])
+        # conjugate_multiplication = reduce(lambda a,b : a * b, [inicio] + quaternions_rotation_list_conjugate[::-1][:i+1])
+        qt_memorizationC = quaternions_rotation_list_conjugate[i] * qt_memorizationC
+        conjugate_multiplication = inicio * qt_memorizationC
         points_list.append(conjugate_multiplication + points_list[i - 1])
     # Creamos una nueva lista que representa las posiciones de los puntos en 3 dimensiones
     points_3d = [[0, 0, 0, 1]] + list(map(lambda x: [x.x, x.y, x.z, 1], points_list))
