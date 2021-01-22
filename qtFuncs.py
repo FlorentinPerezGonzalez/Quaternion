@@ -74,7 +74,6 @@ def directKinematicsQt(arms, articulations):
     # Crear cuaterniones en base al tamaño de los brazos
     arms_quaternions = [np.quaternion(0, size, 0, 0) for size in arms]
     # Crear cuaterniones en base a las rotaciones introducidas por el usuario
-    #quaternions_rotation_list = [cuaternion_rotacionList(articulation) for articulation in articulations]
     quaternions_rotation_list = [quaternion.from_rotation_vector([art[0] * art[3] * pi/180, art[1] * art[3] * pi/180, 
                                                                  art[2] * art[3] * pi/180]) for art in articulations]
     # Crear los quaterniones conjugados de los anterioes
